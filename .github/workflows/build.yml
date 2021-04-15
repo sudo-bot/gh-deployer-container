@@ -1,4 +1,4 @@
-name: test kcov action
+name: test build container
 on: [push]
 
 jobs:
