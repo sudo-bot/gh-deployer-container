@@ -18,7 +18,7 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build action image
-        run: IMAGE_TAG="sudo-bot/gh-deployer-container/phpmyadmin" make docker-build
+        run: IMAGE_TAG="gcr.io/sudo-bot/gh-deployer-container/phpmyadmin" make docker-build
 
       - name: Push to GitHub Packages
         run: docker push gcr.io/sudo-bot/gh-deployer-container/phpmyadmin:latest
