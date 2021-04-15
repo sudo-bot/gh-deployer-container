@@ -14,8 +14,8 @@ jobs:
       - name: Login to DockerHub
         uses: docker/login-action@v1
         with:
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+          username: ${{ github.CONTAINER_PUSH_USERNAME }}
+          password: ${{ secrets.CONTAINER_PUSH_TOKEN }}
       - name: Build action image
         run: IMAGE_TAG="sudo-bot/gh-deployer-container/phpmyadmin" make docker-build
 
