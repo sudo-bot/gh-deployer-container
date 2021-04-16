@@ -14,6 +14,8 @@ You can also specify:
 
 (RANDOM_STRING is just for phpMyAdmin config `blowfish_secret`)
 
+You will need to login with to the container registry (`docker login ghcr.io`). You can provide a PAT as a password, scopes: `read:registry`.
+
 ```sh
 docker run --rm --name myDeployedContainer1 \
     -p 8085:80 \
