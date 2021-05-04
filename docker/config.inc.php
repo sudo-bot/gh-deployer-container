@@ -13,6 +13,8 @@ $cfg['UserprefsDeveloperTab'] = true;
 $cfg['PersistentConnections'] = true;
 $i = 0;
 
+$cfg['MysqlSslWarningSafeHosts'] = [];
+
 $mariaDbVariants = [
     '10.5' => 'mariadb-105.phpmyadmin.local',
     '10.4' => 'mariadb-104.phpmyadmin.local',
@@ -27,6 +29,7 @@ foreach ($mariaDbVariants as $version => $hostname) {
     $cfg['Servers'][$i]['verbose'] = 'MariaDB ' . $version . ' (cookie)';
     $cfg['Servers'][$i]['auth_type'] = 'cookie';
     $cfg['Servers'][$i]['host'] = $hostname;
+    $cfg['MysqlSslWarningSafeHosts'][] = $hostname;
     $cfg['Servers'][$i]['compress'] = true;
     $cfg['Servers'][$i]['AllowNoPassword'] = true;
 }
@@ -55,6 +58,7 @@ foreach ($mysqlDbVariants as $version => $hostname) {
     $cfg['Servers'][$i]['verbose'] = 'MySQL ' . $version . ' (cookie)';
     $cfg['Servers'][$i]['auth_type'] = 'cookie';
     $cfg['Servers'][$i]['host'] = $hostname;
+    $cfg['MysqlSslWarningSafeHosts'][] = $hostname;
     $cfg['Servers'][$i]['compress'] = true;
     $cfg['Servers'][$i]['AllowNoPassword'] = true;
 }
@@ -83,6 +87,7 @@ foreach ($perconaDbVariants as $version => $hostname) {
     $cfg['Servers'][$i]['verbose'] = 'Percona ' . $version . ' (cookie)';
     $cfg['Servers'][$i]['auth_type'] = 'cookie';
     $cfg['Servers'][$i]['host'] = $hostname;
+    $cfg['MysqlSslWarningSafeHosts'][] = $hostname;
     $cfg['Servers'][$i]['compress'] = true;
     $cfg['Servers'][$i]['AllowNoPassword'] = true;
 }
