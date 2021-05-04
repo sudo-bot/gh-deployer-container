@@ -15,7 +15,7 @@ rm -rf ./node_modules
 rm -rf ./tmp/*
 
 composer install --no-dev --prefer-dist --no-interaction --optimize-autoloader
-yarn install --frozen-lockfile --production --cache-folder "$HOME/.yarn" --network-concurrency 1
+yarn install --frozen-lockfile --production --prefer-offline --cache-folder "$HOME/.yarn"
 
 if [ -f composer.lock ]; then
     rm ./composer.lock
