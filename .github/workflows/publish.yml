@@ -16,8 +16,12 @@ jobs:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      - name: Build action image
+
+      - name: Build image
         run: IMAGE_TAG="ghcr.io/sudo-bot/gh-deployer-container/phpmyadmin" make docker-build
+
+      - name: Test image
+        run: IMAGE_TAG="ghcr.io/sudo-bot/gh-deployer-container/phpmyadmin" make docker-test
 
       - name: Push to GitHub Packages
         run: docker push ghcr.io/sudo-bot/gh-deployer-container/phpmyadmin:latest
