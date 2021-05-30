@@ -5,9 +5,9 @@ declare(strict_types=1);
 $cfg['blowfish_secret'] = getenv('RANDOM_STRING');
 $cfg['SendErrorReports'] = 'ask';
 
-$cfg['UploadDir'] = './tmp/';
-$cfg['TempDir'] = './tmp/';
-$cfg['SaveDir'] = './tmp/';
+$cfg['UploadDir'] = __DIR__ . DIRECTORY_SEPARATOR . 'tmp' . DIRECTORY_SEPARATOR . 'upload';
+$cfg['TempDir'] = __DIR__ . DIRECTORY_SEPARATOR . 'tmp';
+$cfg['SaveDir'] = __DIR__ . DIRECTORY_SEPARATOR . 'tmp' . DIRECTORY_SEPARATOR . 'upload';
 
 $cfg['UserprefsDeveloperTab'] = true;
 $cfg['PersistentConnections'] = true;
