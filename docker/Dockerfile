@@ -20,10 +20,12 @@ RUN apk add --no-cache --update nginx git curl bash su-exec \
 
 COPY nginx-default.conf /etc/nginx/conf.d/default.conf
 COPY nginx.conf /etc/nginx/nginx.conf
-COPY docker-entrypoint.sh /docker-entrypoint.sh
 COPY php-fpm-www-pool.conf /etc/php7/php-fpm.d/www.conf
-COPY config.inc.php /config.inc.php
-COPY deploy-branch.sh /deploy-branch.sh
+COPY \
+    config.inc.php \
+    deploy-branch.sh \
+    docker-entrypoint.sh \
+    /
 
 # Metadata
 LABEL org.label-schema.vendor="Sudo-Bot" \
