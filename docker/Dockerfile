@@ -8,7 +8,7 @@ RUN apk add --no-cache --update nginx git curl bash su-exec \
     php7-fpm php7-cli php7-mysqli php7-session php7-mbstring \
     php7-iconv php7-xml php7-tokenizer php7-xmlwriter php7-simplexml \
     php7-dom php7-json php7-bz2 php7-curl php7-gd php7-zip php7-pecl-uploadprogress \
-    gettext composer yarn && \
+    gettext composer yarn gpg-agent && \
     composer self-update --2 && \
     chmod 777 /etc/php7/php-fpm.d/www.conf && \
     mkdir -p /var/log/php7 && \
