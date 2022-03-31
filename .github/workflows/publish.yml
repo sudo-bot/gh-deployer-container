@@ -10,7 +10,7 @@ jobs:
     steps:
       - name: Check out the repo
         uses: actions/checkout@v2
-      - name: Login to DockerHub
+      - name: Login to GitHub registry
         uses: docker/login-action@v1
         with:
           registry: ghcr.io
