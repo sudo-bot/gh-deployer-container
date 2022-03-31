@@ -4,12 +4,13 @@ FROM alpine:3.15
 ARG VCS_REF
 ARG BUILD_DATE
 
+COPY --from=composer:2.3 /usr/bin/composer /usr/bin/composer
+
 RUN apk add --no-cache --update nginx git curl bash su-exec \
     php8-fpm php8-cli php8-mysqli php8-session php8-mbstring \
     php8-iconv php8-xml php8-tokenizer php8-xmlwriter php8-simplexml \
     php8-dom php8-json php8-bz2 php8-curl php8-gd php8-zip php8-pecl-uploadprogress \
-    gettext composer yarn gpg-agent && \
-    composer self-update --2 && \
+    gettext yarn gpg-agent && \
     chmod 777 /etc/php8/php-fpm.d/www.conf && \
     mkdir -p /var/log/php8 && \
     ln -sf /dev/stdout /var/log/nginx/access.log && \
