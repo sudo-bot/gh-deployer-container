@@ -96,6 +96,6 @@ fi
 
 echo 'Starting the services'
 
-php-fpm7
+php-fpm8
 
 nginx
