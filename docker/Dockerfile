@@ -18,9 +18,10 @@ RUN apk add --no-cache --update nginx git curl bash su-exec \
     ln -sf /dev/stderr /var/log/nginx/error.log && \
     ln -sf /dev/stderr /var/log/php8/error.log && \
     nginx -v && php-fpm8 -v && composer --version && php -v && yarn -v && date -R > /build_date && \
+    rm -r /tmp/* && \
     printf '{"build_date": "%s", "timestamp": %i}' "$(date -R)" "$(date +%s)" > /build_date.json
 
-COPY nginx-default.conf /etc/nginx/conf.d/default.conf
+COPY nginx-default.conf /etc/nginx/http.d/default.conf
 COPY nginx.conf /etc/nginx/nginx.conf
 COPY php-fpm-www-pool.conf /etc/php8/php-fpm.d/www.conf
 COPY \

@@ -77,7 +77,7 @@ injectMemoryLimit() {
         # Sed -i is not possible because temp file permissions and redirect output does not work either
         printf "$(sed '/memory_limit/d' /etc/php8/php-fpm.d/www.conf)" > /etc/php8/php-fpm.d/www.conf
         printf '\nphp_admin_value[memory_limit] = %s\n' "${MEMORY_LIMIT}" >> /etc/php8/php-fpm.d/www.conf
-        printf "$(sed "s/client_max_body_size .*;/client_max_body_size ${MEMORY_LIMIT};/" /etc/nginx/conf.d/default.conf)" > /etc/nginx/conf.d/default.conf
+        printf "$(sed "s/client_max_body_size .*;/client_max_body_size ${MEMORY_LIMIT};/" /etc/nginx/http.d/default.conf)" > /etc/nginx/http.d/default.conf
         echo 'Injected MEMORY_LIMIT config'
     fi
 }
