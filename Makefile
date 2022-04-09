@@ -4,6 +4,8 @@ CONTAINER_USER ?= "0:$(shell id -g)"
 
 .PHONY: docker-build
 
+all: docker-build docker-test
+
 docker-build:
 	docker build ./docker \
 		--build-arg VCS_REF=`git rev-parse HEAD` \
