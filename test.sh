@@ -12,7 +12,7 @@ docker run --rm --name test-bench \
 			${IMAGE_TAG}
 
 docker exec test-bench ls -lah /home/www
-docker exec test-bench curl --fail -o ./upgradephpmyadmin.sh https://gist.githubusercontent.com/williamdes/883f2158f17e9ed5a83d892ada56f5df/raw/e5ceceaa0c146e249146d9f2153749b0e02fd0f9/upgradephpmyadmin.sh
+docker exec test-bench curl --fail -o ./upgradephpmyadmin.sh https://gist.githubusercontent.com/williamdes/883f2158f17e9ed5a83d892ada56f5df/raw/48f784c003b5cdec51a36693262a5dd4a2893e16/upgradephpmyadmin.sh
 docker exec test-bench sh -eu ./upgradephpmyadmin.sh "/home/www/" nobody nobody "" phpMyAdmin
 docker exec test-bench ls -lah /home/www
 
