@@ -23,7 +23,7 @@ docker-test:
 		-e MEMORY_LIMIT=254M \
 			${IMAGE_TAG}
 	sleep 2
-	curl -I http://${TEST_ADDR}/
-	curl -I http://${TEST_ADDR}/.nginx/status
-	curl -I http://${TEST_ADDR}/.phpfpm/status
+	curl --fail -I http://${TEST_ADDR}/
+	curl --fail -I http://${TEST_ADDR}/.nginx/status
+	curl --fail -I http://${TEST_ADDR}/.phpfpm/status
 	docker stop test-bench
