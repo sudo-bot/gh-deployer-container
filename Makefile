@@ -14,16 +14,7 @@ docker-build:
 		--pull
 
 docker-test:
-	docker run --rm --name test-bench \
-		-d \
-		--user ${CONTAINER_USER} \
-		-p ${TEST_ADDR}:80 \
-		-v $(PWD):/home/www/phpMyAdmin \
-		-e SKIP_DEPLOY=yes \
-		-e MEMORY_LIMIT=254M \
-			${IMAGE_TAG}
-	sleep 2
-	curl --fail -I http://${TEST_ADDR}/
-	curl --fail -I http://${TEST_ADDR}/.nginx/status
-	curl --fail -I http://${TEST_ADDR}/.phpfpm/status
-	docker stop test-bench
+	CONTAINER_USER="${CONTAINER_USER}" \
+	TEST_ADDR="${TEST_ADDR}" \
+	IMAGE_TAG="${IMAGE_TAG}" \
+	./test.sh
