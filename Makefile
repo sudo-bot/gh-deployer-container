@@ -1,5 +1,6 @@
 IMAGE_TAG ?= gh-deploy-container
-TEST_PORT ?= 9099
+TEST_ADDR ?= 127.0.0.77:9099
+CONTAINER_USER ?= "0:$(shell id -g)"
 
 .PHONY: docker-build
 
@@ -12,14 +13,14 @@ docker-build:
 docker-test:
 	docker run --rm --name test-bench \
 		-d \
-		--user "0:$(id -g)" \
-		-p $(TEST_PORT):80 \
+		--user ${CONTAINER_USER} \
+		-p ${TEST_ADDR}:80 \
 		-v $(PWD):/home/www/phpMyAdmin \
 		-e SKIP_DEPLOY=yes \
 		-e MEMORY_LIMIT=254M \
-			$(IMAGE_TAG)
+			${IMAGE_TAG}
 	sleep 2
-	curl -I http://127.0.0.1:$(TEST_PORT)/
-	curl -I http://127.0.0.1:$(TEST_PORT)/.nginx/status
-	curl -I http://127.0.0.1:$(TEST_PORT)/.phpfpm/status
+	curl -I http://${TEST_ADDR}/
+	curl -I http://${TEST_ADDR}/.nginx/status
+	curl -I http://${TEST_ADDR}/.phpfpm/status
 	docker stop test-bench
