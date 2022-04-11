@@ -13,10 +13,10 @@ docker-build:
 		--tag $(IMAGE_TAG) \
 		--pull
 
-docker-test: run-test test cleanup-test
-
-test:
+docker-test:
 	TEST_ADDR="${TEST_ADDR}" ./test.sh
+
+test: run-test test cleanup-test
 
 run-test:
 	TEST_ADDR="${TEST_ADDR}" \
