@@ -19,14 +19,11 @@ test:
 	TEST_ADDR="${TEST_ADDR}" ./test.sh
 
 run-test:
-	docker run --rm --name test-bench \
-		-d \
-		--user ${CONTAINER_USER} \
-        --workdir /home/www/phpMyAdmin \
-		-p ${TEST_ADDR}:80 \
-		-e SKIP_DEPLOY=yes \
-		-e MEMORY_LIMIT=254M \
-			${IMAGE_TAG}
+	TEST_ADDR="${TEST_ADDR}" \
+	CONTAINER_USER="${CONTAINER_USER}" \
+	IMAGE_TAG="${IMAGE_TAG}" \
+	docker-compose -f docker-compose-latest.test.yml up -d
+	# --exit-code-from=sut --abort-on-container-exit
 
 	docker exec test-bench ls -lah /home/www
 	docker exec test-bench curl --fail -o ./upgradephpmyadmin.sh https://gist.githubusercontent.com/williamdes/883f2158f17e9ed5a83d892ada56f5df/raw/40a79cdf948ba7d702e19b923125631aec821a05/upgradephpmyadmin.sh
@@ -37,4 +34,7 @@ run-test:
 
 cleanup-test:
 	@echo "Stopping and removing the container"
-	docker stop test-bench
+	TEST_ADDR="${TEST_ADDR}" \
+	CONTAINER_USER="${CONTAINER_USER}" \
+	IMAGE_TAG="${IMAGE_TAG}" \
+	docker-compose -f docker-compose-latest.test.yml down

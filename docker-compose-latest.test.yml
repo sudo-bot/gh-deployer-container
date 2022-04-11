@@ -1,0 +1,13 @@
+version: "3.3"
+
+services:
+    sut:
+        container_name: test-bench
+        image: ${IMAGE_TAG}
+        user: ${CONTAINER_USER}
+        environment:
+            SKIP_DEPLOY: 'yes'
+            MEMORY_LIMIT: 254M
+        ports:
+            - ${TEST_ADDR}:80
+        working_dir: /home/www/phpMyAdmin
