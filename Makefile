@@ -25,10 +25,9 @@ run-test:
 	docker-compose -f docker-compose-latest.test.yml up -d
 	# --exit-code-from=sut --abort-on-container-exit
 
-	docker exec test-bench ls -lah /home/www
 	docker exec test-bench curl --fail -o ./upgradephpmyadmin.sh https://gist.githubusercontent.com/williamdes/883f2158f17e9ed5a83d892ada56f5df/raw/40a79cdf948ba7d702e19b923125631aec821a05/upgradephpmyadmin.sh
 	docker exec test-bench sh -eu ./upgradephpmyadmin.sh "/home/www/" nobody nobody "" phpMyAdmin
-	docker exec test-bench ls -lah /home/www
+	docker cp tests/config.inc.php test-bench:/home/www/phpMyAdmin/config.inc.php
 	@sleep 2
 	@echo "You can browse: http://${TEST_ADDR}"
 
