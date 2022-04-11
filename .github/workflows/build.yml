@@ -9,4 +9,4 @@ jobs:
             - name: Build image
               run: make docker-build
             - name: Test image
-              run: make docker-test
+              run: make test

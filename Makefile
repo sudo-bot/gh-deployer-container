@@ -2,7 +2,7 @@ IMAGE_TAG ?= gh-deploy-container
 TEST_ADDR ?= 127.0.0.77:9099
 CONTAINER_USER ?= "0:$(shell id -g)"
 
-.PHONY: docker-build
+.PHONY: docker-build docker-test run-test cleanup-test test
 
 all: docker-build docker-test
 
@@ -13,8 +13,28 @@ docker-build:
 		--tag $(IMAGE_TAG) \
 		--pull
 
-docker-test:
-	CONTAINER_USER="${CONTAINER_USER}" \
-	TEST_ADDR="${TEST_ADDR}" \
-	IMAGE_TAG="${IMAGE_TAG}" \
-	./test.sh
+docker-test: run-test test cleanup-test
+
+test:
+	TEST_ADDR="${TEST_ADDR}" ./test.sh
+
+run-test:
+	docker run --rm --name test-bench \
+		-d \
+		--user ${CONTAINER_USER} \
+        --workdir /home/www/phpMyAdmin \
+		-p ${TEST_ADDR}:80 \
+		-e SKIP_DEPLOY=yes \
+		-e MEMORY_LIMIT=254M \
+			${IMAGE_TAG}
+
+	docker exec test-bench ls -lah /home/www
+	docker exec test-bench curl --fail -o ./upgradephpmyadmin.sh https://gist.githubusercontent.com/williamdes/883f2158f17e9ed5a83d892ada56f5df/raw/40a79cdf948ba7d702e19b923125631aec821a05/upgradephpmyadmin.sh
+	docker exec test-bench sh -eu ./upgradephpmyadmin.sh "/home/www/" nobody nobody "" phpMyAdmin
+	docker exec test-bench ls -lah /home/www
+	@sleep 2
+	@echo "You can browse: http://${TEST_ADDR}"
+
+cleanup-test:
+	@echo "Stopping and removing the container"
+	docker stop test-bench

@@ -2,22 +2,6 @@
 
 set -eu
 
-docker run --rm --name test-bench \
-		-d \
-		--user ${CONTAINER_USER} \
-        --workdir /home/www/phpMyAdmin \
-		-p ${TEST_ADDR}:80 \
-		-e SKIP_DEPLOY=yes \
-		-e MEMORY_LIMIT=254M \
-			${IMAGE_TAG}
-
-docker exec test-bench ls -lah /home/www
-docker exec test-bench curl --fail -o ./upgradephpmyadmin.sh https://gist.githubusercontent.com/williamdes/883f2158f17e9ed5a83d892ada56f5df/raw/40a79cdf948ba7d702e19b923125631aec821a05/upgradephpmyadmin.sh
-docker exec test-bench sh -eu ./upgradephpmyadmin.sh "/home/www/" nobody nobody "" phpMyAdmin
-docker exec test-bench ls -lah /home/www
-
-sleep 2
-
 DID_FAIL=0
 
 checkUrl() {
@@ -42,6 +26,3 @@ if [ $DID_FAIL -gt 0 ]; then
     echo "Showing logs"
     docker logs test-bench
 fi
-
-echo "Stopping and removing the container"
-docker stop test-bench
