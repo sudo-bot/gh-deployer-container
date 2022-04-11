@@ -35,6 +35,8 @@ echo "Running tests..."
 checkUrl "http://${TEST_ADDR}/"
 checkUrl "http://${TEST_ADDR}/.nginx/status"
 checkUrl "http://${TEST_ADDR}/.phpfpm/status"
+checkUrl "http://${TEST_ADDR}/index.php"
+checkUrl "http://${TEST_ADDR}/robots.txt"
 
 if [ $DID_FAIL -gt 0 ]; then
     echo "Showing logs"
