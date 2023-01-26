@@ -1,10 +1,10 @@
-FROM alpine:3.15
+FROM alpine:3.17
 
 # Metadata params
 ARG VCS_REF
 ARG BUILD_DATE
 
-COPY --from=composer:2.3 /usr/bin/composer /usr/bin/composer
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
 RUN apk add --no-cache --update nginx git curl bash su-exec \
     php8-fpm php8-cli php8-phar php8-mysqli php8-session php8-mbstring \
