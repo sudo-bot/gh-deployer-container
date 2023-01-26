@@ -7,23 +7,21 @@ ARG BUILD_DATE
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
 RUN apk add --no-cache --update nginx git curl bash su-exec \
-    php8-fpm php8-cli php8-phar php8-mysqli php8-session php8-mbstring \
-    php8-iconv php8-xml php8-tokenizer php8-xmlwriter php8-simplexml \
-    php8-dom php8-json php8-bz2 php8-curl php8-gd php8-zip php8-pecl-uploadprogress \
+    php81-fpm php81-cli php81-phar php81-mysqli php81-session php81-mbstring \
+    php81-iconv php81-xml php81-tokenizer php81-xmlwriter php81-simplexml \
+    php81-dom php81-json php81-bz2 php81-curl php81-gd php81-zip php81-pecl-uploadprogress \
     gettext yarn gpg-agent gpg && \
-    # https://gitlab.alpinelinux.org/alpine/aports/-/issues/12308
-    ln -s /usr/bin/php8 /usr/bin/php && \
-    mkdir -p /var/log/php8 && \
+    mkdir -p /var/log/php81 && \
     ln -sf /dev/stdout /var/log/nginx/access.log && \
     ln -sf /dev/stderr /var/log/nginx/error.log && \
-    ln -sf /dev/stderr /var/log/php8/error.log && \
-    nginx -v && php-fpm8 -v && composer --version && php -v && yarn -v && date -R > /build_date && \
+    ln -sf /dev/stderr /var/log/php81/error.log && \
+    nginx -v && php-fpm81 -v && composer --version && php -v && yarn -v && date -R > /build_date && \
     rm -r /tmp/* && \
     printf '{"build_date": "%s", "timestamp": %i}' "$(date -R)" "$(date +%s)" > /build_date.json
 
 COPY nginx-default.conf /etc/nginx/http.d/default.conf
 COPY nginx.conf /etc/nginx/nginx.conf
-COPY php-fpm-www-pool.conf /etc/php8/php-fpm.d/www.conf
+COPY php-fpm-www-pool.conf /etc/php81/php-fpm.d/www.conf
 COPY \
     config.inc.php \
     deploy-branch.sh \
